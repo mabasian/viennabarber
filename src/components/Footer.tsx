@@ -96,7 +96,7 @@ export function Footer() {
               rel="noopener noreferrer"
               className="font-medium text-ink/80 underline-offset-2 transition-colors hover:text-accent hover:underline"
             >
-              Mohammadreza Abbasian
+              Mabasian (Reza)
             </a>
           </p>
         </div>

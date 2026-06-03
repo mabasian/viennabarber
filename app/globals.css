@@ -1,0 +1,192 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * ─── DESIGN-TOKENS / THEMES ──────────────────────────────────────────────
+ * Farben als RGB-Kanäle (space-separated) → Tailwind-Opacity (bg-accent/30) bleibt nutzbar.
+ * Theme-Wechsel via [data-theme="…"] auf <html>. Siehe ThemeSwitcher (Demo-Werkzeug).
+ * Rollen: --bg Seite · --surface Karten · --surface-2 erhöht · --border Linien
+ *         --text Haupttext · --muted Sekundärtext · --accent Akzent · --on-accent Text auf Akzent
+ */
+:root {
+  --font-display: 'Bebas Neue';
+  --font-sans: 'Inter';
+}
+
+@layer base {
+  /* 1 · Midnight Gold – tiefes Nachtblau-Schwarz + warmes Gold (Default) */
+  :root,
+  [data-theme='midnight-gold'] {
+    --bg: 11 13 18;
+    --surface: 20 23 31;
+    --surface-2: 28 32 42;
+    --border: 44 49 61;
+    --text: 245 243 236;
+    --muted: 154 160 173;
+    --accent: 201 162 39;
+    --accent-2: 226 195 102;
+    --on-accent: 16 16 16;
+    --grad-hero: radial-gradient(1200px 600px at 75% -10%, rgb(201 162 39 / 0.20), transparent 60%),
+      radial-gradient(900px 500px at 10% 110%, rgb(201 162 39 / 0.10), transparent 60%);
+  }
+
+  /* 2 · Espresso Steel – dunkles Espresso-Braun + kühler Stahl-Akzent */
+  [data-theme='espresso-steel'] {
+    --bg: 21 17 13;
+    --surface: 31 26 21;
+    --surface-2: 41 35 28;
+    --border: 58 50 41;
+    --text: 240 236 230;
+    --muted: 168 160 150;
+    --accent: 159 177 188;
+    --accent-2: 193 207 215;
+    --on-accent: 18 20 22;
+    --grad-hero: radial-gradient(1200px 600px at 75% -10%, rgb(159 177 188 / 0.18), transparent 60%),
+      radial-gradient(900px 500px at 10% 110%, rgb(159 177 188 / 0.08), transparent 60%);
+  }
+
+  /* 3 · Vienna Bronze – warmes Dunkelbraun + edle Bronze */
+  [data-theme='vienna-bronze'] {
+    --bg: 16 12 10;
+    --surface: 27 20 16;
+    --surface-2: 38 29 22;
+    --border: 56 43 33;
+    --text: 244 238 230;
+    --muted: 170 156 142;
+    --accent: 193 124 63;
+    --accent-2: 216 154 98;
+    --on-accent: 18 13 9;
+    --grad-hero: radial-gradient(1200px 600px at 75% -10%, rgb(193 124 63 / 0.22), transparent 60%),
+      radial-gradient(900px 500px at 10% 110%, rgb(193 124 63 / 0.10), transparent 60%);
+  }
+
+  /* 4 · Graphite Luxe – neutrales Graphit + Platin-Akzent (monochrom-edel) */
+  [data-theme='graphite-luxe'] {
+    --bg: 18 19 21;
+    --surface: 28 30 34;
+    --surface-2: 38 41 46;
+    --border: 54 58 64;
+    --text: 240 241 243;
+    --muted: 158 164 172;
+    --accent: 201 205 211;
+    --accent-2: 224 227 232;
+    --on-accent: 20 21 23;
+    --grad-hero: radial-gradient(1200px 600px at 75% -10%, rgb(201 205 211 / 0.14), transparent 60%),
+      radial-gradient(900px 500px at 10% 110%, rgb(201 205 211 / 0.07), transparent 60%);
+  }
+
+  /* 5 · Royal Burgundy – tiefes Schwarz-Pflaume + Wein-Akzent */
+  [data-theme='royal-burgundy'] {
+    --bg: 18 10 12;
+    --surface: 29 16 19;
+    --surface-2: 41 23 27;
+    --border: 62 35 41;
+    --text: 245 235 236;
+    --muted: 178 152 156;
+    --accent: 168 51 71;
+    --accent-2: 201 78 99;
+    --on-accent: 246 236 237;
+    --grad-hero: radial-gradient(1200px 600px at 75% -10%, rgb(168 51 71 / 0.26), transparent 60%),
+      radial-gradient(900px 500px at 10% 110%, rgb(168 51 71 / 0.12), transparent 60%);
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-base text-ink font-sans antialiased;
+    background-image: var(--grad-hero);
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    background: rgb(var(--accent) / 0.85);
+    color: rgb(var(--on-accent));
+  }
+
+  /* sanfter Übergang großer Flächen beim Theme-Wechsel (ohne Hover/Transform zu stören) */
+  @media (prefers-reduced-motion: no-preference) {
+    body,
+    section,
+    header,
+    footer {
+      transition: background-color 350ms ease, color 350ms ease, border-color 350ms ease;
+    }
+  }
+}
+
+@layer components {
+  .container-wide {
+    @apply mx-auto w-full max-w-content px-5 sm:px-8;
+  }
+
+  .section-pad {
+    @apply py-20 md:py-28;
+  }
+
+  .eyebrow {
+    @apply mb-4 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.28em] text-accent;
+  }
+
+  .h-display {
+    @apply font-display font-normal uppercase leading-[0.95] tracking-tight;
+  }
+
+  .section-title {
+    @apply h-display text-4xl text-ink sm:text-5xl md:text-6xl;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-accent px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-accent-ink shadow-glow transition-all duration-300 hover:-translate-y-0.5 hover:brightness-110 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-base;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-line bg-surface/40 px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-ink backdrop-blur transition-all duration-300 hover:border-accent hover:text-accent focus:outline-none focus-visible:ring-2 focus-visible:ring-accent;
+  }
+
+  .card {
+    @apply rounded-2xl border border-line bg-surface/70 backdrop-blur-sm shadow-card;
+  }
+
+  .glass {
+    @apply border border-line/80 bg-surface/60 backdrop-blur-md;
+  }
+
+  .input {
+    @apply w-full rounded-xl border border-line bg-base/60 px-4 py-3 text-sm text-ink placeholder:text-muted/60 outline-none transition-colors focus:border-accent focus:ring-2 focus:ring-accent/30;
+  }
+
+  .accent-line {
+    @apply h-px w-full bg-gradient-to-r from-transparent via-accent/50 to-transparent;
+  }
+}
+
+@layer utilities {
+  .text-gradient-accent {
+    background: linear-gradient(100deg, rgb(var(--accent)) 0%, rgb(var(--accent-2)) 50%, rgb(var(--accent)) 100%);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+/* reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
